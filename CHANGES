@@ -1,3 +1,10 @@
+0.0.3
+  Allow JLogger::Simple to act as a rootlogger (e.g., JLogger::Simple.info "hello", 
+  JLogger::Simple.startConsole, etc. will all work.)
+  
+  Provide a class-level 'log' method (e.g., MyClass.log.info 'hello') for use inside
+  class methods. (def self.hello; log 'hello'; end)
+  
 0.0.2
   First gem
 
