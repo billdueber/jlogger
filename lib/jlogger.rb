@@ -61,9 +61,7 @@ end
 module JLogger
   module Simple
     include RJack::Logback
-    
-    @root = JLogger::RootLogger.new
-  
+
     Level = Java::ch.qos.logback.classic.Level
     LEVELS = {
       # :off => RJack::Logback::OFF,
@@ -74,15 +72,18 @@ module JLogger
       :warn => WARN,
       :error => ERROR,
     }
-    
+        
     def self.method_missing(meth, *args)
       @root.send(meth, *args)
     end
-  
-  
+      
+    
+
     # On inclusion, we set up a logger for this class
   
     def self.included klass
+      @root ||= JLogger::RootLogger.new
+      
       class << klass
         attr_accessor :_slflogger, :_logobject
       
@@ -90,6 +91,11 @@ module JLogger
           RJack::Logback.root.jlogger.detachAppender('console')
           @_slflogger = RJack::SLF4J[self]
           @_logobject = RJack::Logback[@_slflogger.name]
+        end
+        
+        def log
+          createlogger unless @_slflogger
+          return @_slflogger
         end
       
         def loglevel= level
@@ -178,6 +184,7 @@ module JLogger
     # method not found.s
     
     def loglevel= level
+      self.class.createlogger unless self.class._logobject
       level = level.to_s.downcase.to_sym
       unless JLogger::Simple::LEVELS.has_key? level
         raise ArgumentError, "'#{level}' is an invalid loglevel"
