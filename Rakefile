@@ -5,11 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "jlogger"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Simple wrapper around rjack-logback}
+    gem.description = %Q{Include in your modules to get a defaul 'log' object; then use it to log stuff}
     gem.email = "bill@dueber.com"
     gem.homepage = "http://github.com/billdueber/jlogger"
     gem.authors = ["BillDueber"]
+
+    gem.add_dependency "rjack-logback"
+
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
