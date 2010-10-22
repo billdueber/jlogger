@@ -91,6 +91,7 @@ module JLogger
           RJack::Logback.root.jlogger.detachAppender('console')
           @_slflogger = RJack::SLF4J[self]
           @_logobject = RJack::Logback[@_slflogger.name]
+          @_slflogger = @_logobject.jlogger
         end
         
         def log
